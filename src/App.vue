@@ -43,6 +43,7 @@
         Add
       },
       methods: {
+        // 在数组前添加一个元素
         addComment(comment) {
           this.comments.unshift(comment)
         },
