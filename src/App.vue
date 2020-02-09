@@ -1,56 +1,64 @@
 <template>
-  <div>
-    <header class="site-header jumbotron">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12">
-            <h1>请发表对React的评论</h1>
-          </div>
-        </div>
-      </div>
-    </header>
-    <div class="container">
-      <Add :addComment="addComment"/>
-      <List :comments="comments" :deleteComment="deleteComment"/>
+  <div class="todo-container">
+    <div class="todo-wrap">
+      <TodoHeader :addTodos="addTodos"/>
+      <TodoList :todos="todos" :deleteTodo="deleteTodo"/>
+      <TodoFooter :todos="todos" :selectAll="selectAll" :delSelectItem="delSelectItem"/>
     </div>
   </div>
 </template>
 
+
 <script>
-  import Add from './components/Add.vue'
-  import List from './components/List.vue'
+
+  import TodoHeader from './components/TodoHeader.vue'
+  import TodoList from './components/TodoList'
+  import TodoFooter from './components/TodoFooter'
 
     export default {
+      name: "App",
       data() {
-        // 这里要使用return的方式声名
         return {
-          comments: [
+          todos: [
             {
-              name: 'Jack',
-              content: "vue 很不错。"
-            },{
-              name: 'Rose',
-              content: "vue, I like it."
-            },{
-              name: 'Lee',
-              content: "vue is so difficult."
+              "id": 1,
+              "name": "上班",
+              "complete": false
+            },
+            {
+              "id": 2,
+              "name": "吃饭",
+              "complete": true
+            },
+            {
+              "id": 3,
+              "name": "coding",
+              "complete": false
             }
           ]
         }
       },
       components: {
-        List,
-        Add
+        TodoHeader,
+        TodoList,
+        TodoFooter
       },
       methods: {
-        // 在数组前添加一个元素
-        addComment(comment) {
-          this.comments.unshift(comment)
+        // 添加
+        addTodos(todo) {
+          this.todos.unshift(todo);
         },
-        // 删除指定下标的评论
-        deleteComment(index) {
-          // 从index开始删除，删除一个
-          this.comments.splice(index, 1)
+        // 删除元素
+        deleteTodo(index) {
+          this.todos.splice(index, 1);
+        },
+        // 全选/全不选
+        selectAll(check) {
+          this.todos.forEach(todo => todo.complete = check);
+        },
+        // 删除选中
+        delSelectItem() {
+          this.todos = this.todos.filter(todo => !todo.complete)
         }
       }
     }
