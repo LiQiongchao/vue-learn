@@ -1,8 +1,14 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <TodoHeader :addTodos="addTodos"/>
-      <TodoList :todos="todos" :deleteTodo="deleteTodo"/>
+      <!-- 传递方式一 -->
+<!--      <TodoHeader :addTodos="addTodos"/>-->
+      <!-- 传递方式二 -->
+<!--      <TodoHeader @addTodo="addTodos"/>-->
+      <!-- 传递方式三 -->
+      <TodoHeader ref="header"/>
+<!--      <TodoList :todos="todos" :deleteTodo="deleteTodo"/>-->
+      <TodoList :todos="todos"/>
       <TodoFooter :todos="todos" :selectAll="selectAll" :delSelectItem="delSelectItem"/>
     </div>
   </div>
@@ -14,6 +20,7 @@
   import TodoHeader from './components/TodoHeader.vue'
   import TodoList from './components/TodoList'
   import TodoFooter from './components/TodoFooter'
+  import PubSub from 'pubsub-js'
 
     export default {
       name: "App",
@@ -74,6 +81,19 @@
         delSelectItem() {
           this.todos = this.todos.filter(todo => !todo.complete)
         }
+      },
+        // 执行异步代码，生命周期的初始
+      mounted() {
+          // 给<TodoHeader/>绑定addTodo事件监听
+          // this.$on('addTodo', this.addTodos);
+          this.$refs.header.$on('addTodo', this.addTodos);
+
+          // 订阅消息
+          // PubSub.subscribe('deleteTodo', function (msg, data) {});
+          // 使用简写是为了使用this，只有这样this才是指向的是当前的页面对象
+          PubSub.subscribe('deleteTodo', (msg, index) => {
+              this.deleteTodo(index);
+          });
       }
     }
 </script>

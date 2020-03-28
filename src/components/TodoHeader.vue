@@ -7,9 +7,9 @@
 <script>
     export default {
       name: "TodoHeader",
-      props: {
+      /*props: {
         addTodos: Function,
-      },
+      },*/
       data () {
         return {
           "title": ''
@@ -26,7 +26,8 @@
           // 2- 组装成一个todo对象
           const todo = {"name": title, "complete": false};
           // 3- 添加到todos里
-          this.addTodos(todo);
+          // this.addTodos(todo);
+            this.$emit('addTodo', todo);
           // 4- 清除输入
           this.title = '';
         }
