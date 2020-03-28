@@ -19,7 +19,7 @@
       name: "App",
       data() {
         return {
-          todos: [
+          /*todos: [
             {
               "id": 1,
               "name": "上班",
@@ -35,13 +35,27 @@
               "name": "coding",
               "complete": false
             }
-          ]
+          ]*/
+          // todos的数据从本地缓存文件中取，如果没有，显示则为空数组
+          todos: JSON.parse(window.localStorage.getItem("todo_arr") || "[]")
         }
       },
       components: {
         TodoHeader,
         TodoList,
         TodoFooter
+      },
+      watch: {
+        // 深度监控，数据如果发生变化则保存到localStorage
+          todos: {
+              // 开启尝试监视, 为了发现对象内部值的变化
+              deep: true,
+              // handler: function (newVal, oldVal) {
+              handler: function (newVal) {
+                  // 把新的数组转变成json保存到localStorage中
+                  window.localStorage.setItem("todo_arr", JSON.stringify(newVal));
+              }
+          }
       },
       methods: {
         // 添加
