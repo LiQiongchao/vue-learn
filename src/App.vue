@@ -4,9 +4,9 @@
       <!-- 传递方式一 -->
 <!--      <TodoHeader :addTodos="addTodos"/>-->
       <!-- 传递方式二 -->
-      <TodoHeader @addTodo="addTodos"/>
+<!--      <TodoHeader @addTodo="addTodos"/>-->
       <!-- 传递方式三 -->
-<!--      <TodoHeader ref="header"/>-->
+      <TodoHeader ref="header"/>
 <!--      <TodoList :todos="todos" :deleteTodo="deleteTodo"/>-->
       <TodoList :todos="todos"/>
 <!--      <TodoFooter :todos="todos" :selectAll="selectAll" :delSelectItem="delSelectItem"/>-->
@@ -71,7 +71,11 @@
                   // window.localStorage.setItem("todo_arr", JSON.stringify(newVal));
                   storageUtils.saveTodo(newVal);
               }*/
-              handler: storageUtils.saveTodo
+              // 这样写比storageUtils.saveTodo(newVal);要快，因为少调了一层方法。
+              handler: storageUtils.saveTodo // 相当于下面的这种写法
+              /*handler: function(todo) {
+                  window.localStorage.setItem(TODO_KEY, JSON.stringify(todo));
+              }*/
           }
       },
       methods: {
@@ -96,7 +100,7 @@
       mounted() {
           // 给<TodoHeader/>绑定addTodo事件监听
           // this.$on('addTodo', this.addTodos);
-          // this.$refs.header.$on('addTodo', this.addTodos);
+          this.$refs.header.$on('addTodo', this.addTodos);
 
           // 订阅消息
           // PubSub.subscribe('deleteTodo', function (msg, data) {});
