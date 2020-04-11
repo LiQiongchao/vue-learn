@@ -1,27 +1,18 @@
 <template>
-  <div class="container">
-    <Search></Search>
-    <users-main></users-main>
-<!--    <usersMain></usersMain>-->
-  </div>
+  <mt-button type="primary" @click.native="clickTest" style="width: 100%;">test</mt-button>
 </template>
 
 
 <script>
 
-    import Search from './components/Search';
-    import Main from './components/Main';
+  // 引入Toast消息提示框
+    import { Toast } from 'mint-ui';
 
     export default {
         name: "App",
-        components: {
-            Search,
-            usersMain: Main
-        },
-        data() {
-            return {
-                repoUrl: '',
-                repoName: ''
+        methods: {
+            clickTest() {
+                Toast("干啥那？瞎点啥玩意。")
             }
         }
     }
