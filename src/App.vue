@@ -1,55 +1,49 @@
 <template>
-  <div v-if="!repoUrl">loading</div>
-  <div v-else>
-<!--    most start repo is <a href="">{{repoName}}</a>-->
-    most start repo is <a v-bind:href="repoUrl">{{repoName}}</a>
+  <div class="container">
+    <Search></Search>
+    <users-main></users-main>
+<!--    <usersMain></usersMain>-->
   </div>
 </template>
 
 
 <script>
 
-    import axios from 'axios';
+    import Search from './components/Search';
+    import Main from './components/Main';
 
     export default {
-      name: "App",
-      data () {
-        return {
-            repoUrl: '',
-            repoName: ''
+        name: "App",
+        components: {Search},
+        comments: {
+          Search,
+          usersMain: Main
+        },
+        data() {
+            return {
+                repoUrl: '',
+                repoName: ''
+            }
         }
-      },
-      mounted() {
-        // 发送ajaxg请求
-          const url = 'https://api.github.com/search/repositories?q=vu&sort=stars';
-          /*this.$http.get(url).then(
-              successResponse => {
-                  const result = successResponse.data;
-                  const item = result.items[0];
-                  this.repoUrl = item.html_url;
-                  this.repoName = item.name;
-              },
-              failureResponse => {
-                  console.log(failureResponse.message)
-              }
-          ).catch(error => {
-              console.log(error.message);
-          })*/
-
-          // use axios
-          axios.get(url).then(successResponse => {
-              const result = successResponse.data;
-              const item = result.items[0];
-              this.repoUrl = item.html_url;
-              this.repoName = item.name;
-          }).catch(error => {
-              console.log(error)
-              alert(error.message);
-          })
-      }
     }
 </script>
 
 <style scoped>
+  .card {
+    float: left;
+    width: 33.333%;
+    padding: .75rem;
+    margin-bottom: 2rem;
+    border: 1px solid #efefef;
+    text-align: center;
+  }
 
+  .card > img {
+    margin-bottom: .75rem;
+    border-radius: 100px;
+  }
+
+  .card-text {
+    font-size: 85%;
+  }
 </style>
