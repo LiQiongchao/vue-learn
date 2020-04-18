@@ -21,7 +21,7 @@
             keep-alive： 表示缓存路由
             -->
             <keep-alive>
-              <router-view msg="abc"></router-view>
+              <router-view msg="我是通过组件传递的参数"></router-view>
             </keep-alive>
           </div>
         </div>

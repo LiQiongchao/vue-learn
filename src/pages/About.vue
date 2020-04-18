@@ -1,13 +1,17 @@
 <template>
   <div>
     <h2>About</h2>
-    <input type="text">
+    <p>[{{msg}}]</p>
+    <input type="text" :placeholder="msg">
   </div>
 </template>
 
 <script>
   export default {
-    name: 'About'
+    name: 'About',
+    props: {
+      msg: String
+    }
   }
 </script>
 
