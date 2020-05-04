@@ -1,40 +1,51 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-xs-offset-2 col-xs-8">
-        <div class="page-header"><h2>Router Test</h2></div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-2 col-xs-offset-2">
-        <div class="list-group">
-          <!--生成路由链接-->
-          <router-link to="/about" class="list-group-item">About</router-link>
-          <router-link to="/home" class="list-group-item">Home</router-link>
-        </div>
-      </div>
-      <div class="col-xs-6">
-        <div class="panel">
-          <div class="panel-body">
-            <!--显示当前组件
-            keep-alive： 表示缓存路由
-            -->
-            <keep-alive>
-              <router-view msg="我是通过组件传递的参数"></router-view>
-            </keep-alive>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div></div>
+    <p>clicked : {{count}} times, count is {{isEvenOrOdd}}</p>
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+    <button @click="incrementIfOdd">increment if odd</button>
+    <button @click="incrementAsync">increment async</button>
   </div>
 </template>
 
 
 <script>
     export default {
-        name: "App"
+      name: "App",
+      data() {
+          return{
+            count: 0
+          }
+      },
+
+      computed: {
+        isEvenOrOdd() {
+          return this.count % 2 === 0 ? '偶数' : '奇数'
+        }
+      },
+      methods: {
+        // 加1操作
+        increment() {
+          this.count++;
+        },
+        //减1操作
+        decrement() {
+          this.count--;
+        },
+        // 如果是奇数就加1
+        incrementIfOdd() {
+          let count = this.count;
+          if (count % 2 === 1) {
+            this.count = count + 1;
+          }
+        },
+        // 异步加1
+        incrementAsync() {
+          setTimeout(() => {
+            this.count++;
+          }, 1000)
+        }
+      }
     }
 </script>
 
