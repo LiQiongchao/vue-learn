@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>clicked : {{$store.state.count}} times, count is {{isEvenOrOdd}}</p>
+    <p>clicked : {{count}} times, count is {{isEvenOrOdd}}</p>
     <button @click="increment">+</button>
     <button @click="decrement">-</button>
     <button @click="incrementIfOdd">increment if odd</button>
@@ -20,25 +20,30 @@
 
       computed: {
         isEvenOrOdd() {
-          return this.$store.getters.isEvenOrOdd
+          return this.count % 2 === 0 ? '偶数' : '奇数'
         }
       },
       methods: {
         // 加1操作
         increment() {
-          this.$store.dispatch('increment')
+          this.count++;
         },
         //减1操作
         decrement() {
-          this.$store.dispatch('decrement')
+          this.count--;
         },
         // 如果是奇数就加1
         incrementIfOdd() {
-          this.$store.dispatch('incrementIfOdd')
+          let count = this.count;
+          if (count % 2 === 1) {
+            this.count = count + 1;
+          }
         },
         // 异步加1
         incrementAsync() {
-          this.$store.dispatch('incrementAsync')
+          setTimeout(() => {
+            this.count++;
+          }, 1000)
         }
       }
     }
