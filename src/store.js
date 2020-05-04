@@ -63,6 +63,9 @@ const getters = {
   // Vuex会自动注入state对象
   isEvenOrOdd(state) {
     return state.count % 2 === 0 ? '偶数' : '奇数'
+  },
+  isEvenOrOdd2(state) {
+    return state.count % 2 === 0 ? '偶数' : '奇数'
   }
 }
 
